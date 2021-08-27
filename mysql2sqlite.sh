@@ -6,8 +6,7 @@ echo $thisdir
 # exit 1
 
 db=$1
-
-rm "${db}.sqlite3"
+prefix="${db}-$(date "+%Y%m%d-%H%M%S")"
 mysqldump -hcn -udark -p654123 ${db} \
-    | tee ${db}.my.sql | ${thisdir}/mysql2sqlite - \
-    | tee ${db}.lite.sql | sqlite3 ${db}.sqlite3
+    | tee ${prefix}.my.sql | ${thisdir}/mysql2sqlite - \
+    | tee ${prefix}.lite.sql | sqlite3 "${prefix}.sqlite3"
